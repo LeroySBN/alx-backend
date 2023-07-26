@@ -25,7 +25,8 @@ class LFUCache(BaseCaching):
             else:
                 if len(self.cache_data) >= self.MAX_ITEMS:
                     min_count = min(self.count.values())
-                    least_frequent = [k for k in self.count if self.count[k] == min_count]
+                    least_frequent = [k for k in self.count
+                                      if self.count[k] == min_count]
 
                     # Use LRU algorithm to discard the least recently used item
                     for idx in range(len(self.queue)):
