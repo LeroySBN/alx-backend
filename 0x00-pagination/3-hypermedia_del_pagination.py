@@ -64,7 +64,7 @@ class Server:
 
         data = [indexed_dataset[i] for i in valid_indices[index:next_index]]
 
-        # if next index exists in the dataset else find next available index
+        # Find the next available index in the dataset
         while next_index is not None and next_index not in indexed_dataset:
             next_index += 1
 
