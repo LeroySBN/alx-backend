@@ -18,16 +18,25 @@ class LFUCache(BaseCaching):
     def put(self, key, item):
         """ Add an item in the cache
         """
-        if key and item:
+        if key is not None and item is not None:
             if key in self.cache_data:
                 self.cache_data[key] = item
                 self.count[key] += 1
             else:
                 if len(self.cache_data) >= self.MAX_ITEMS:
-                    discard = self.queue.pop(0)
-                    del self.cache_data[discard]
-                    del self.count[discard]
-                    print("DISCARD: {}".format(discard))
+                    min_count = min(self.count.values())
+                    least_frequent = [k for k in self.count if self.count[k] == min_count]
+
+                    # Use LRU algorithm to discard the least recently used item
+                    for idx in range(len(self.queue)):
+                        if self.queue[idx] in least_frequent:
+                            to_discard = self.queue.pop(idx)
+                            break
+
+                    del self.cache_data[to_discard]
+                    del self.count[to_discard]
+                    print("DISCARD: {}".format(to_discard))
+
                 self.queue.append(key)
                 self.cache_data[key] = item
                 self.count[key] = 1
