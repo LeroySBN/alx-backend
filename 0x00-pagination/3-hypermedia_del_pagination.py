@@ -56,12 +56,13 @@ class Server:
         if index is None or index >= data_len:
             index = 0
 
-        next_index = index + page_size
-        if next_index >= data_len:
-            next_index = data_len
-
         # Create copy of the indexed dataset and filter out the deleted indices
         valid_indices = [i for i in range(data_len) if i in indexed_dataset]
+
+        next_index = index + page_size
+        if next_index >= len(valid_indices):
+            next_index = len(valid_indices)
+
         data = [indexed_dataset[i] for i in valid_indices[index:next_index]]
 
         return {
