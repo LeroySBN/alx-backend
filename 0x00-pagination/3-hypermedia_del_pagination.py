@@ -47,7 +47,7 @@ class Server:
             page_size: the current page size.
             data: the actual page of the dataset.
         """
-        assert type(index) == int and index >= 0
+        assert type(index) == int or index is None
         assert type(page_size) == int and page_size > 0
 
         indexed_dataset = self.indexed_dataset()
@@ -56,18 +56,21 @@ class Server:
         if index is None or index >= data_len:
             index = 0
 
-        # Create copy of the indexed dataset and filter out the deleted indices
         valid_indices = [i for i in range(data_len) if i in indexed_dataset]
 
         next_index = index + page_size
-        if next_index >= len(valid_indices):
-            next_index = len(valid_indices)
+        if next_index >= data_len:
+            next_index = None
 
         data = [indexed_dataset[i] for i in valid_indices[index:next_index]]
+
+        # if next index exists in the dataset else find next available index
+        while next_index is not None and next_index not in indexed_dataset:
+            next_index += 1
 
         return {
             'index': index,
             'data': data,
             'page_size': page_size,
-            'next_index': next_index if next_index < data_len else None
+            'next_index': next_index
         }
