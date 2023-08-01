@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=['GET'], strict_slashes=False)
-def index() -> str:
+def index():
     """ GET /
         Return: 0-index.html
     """
