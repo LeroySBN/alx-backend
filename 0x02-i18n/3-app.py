@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """ Basic Flask app, Basic Babel setup, Get locale from request,
-    Parametrize templates, Force locale with URL parameter
+    Parametrize templates
 """
 from flask import Flask, render_template, request
 from flask_babel import Babel
