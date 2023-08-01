@@ -6,7 +6,7 @@ from flask import Flask, render_template, request
 from flask_babel import Babel
 
 app = Flask(__name__)
-babel = Babel(app)
+app.url_map.strict_slashes = False
 
 
 class Config(object):
@@ -18,6 +18,7 @@ class Config(object):
 
 
 app.config.from_object(Config)
+babel = Babel(app)
 
 
 @babel.localeselector
@@ -27,13 +28,13 @@ def get_locale():
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
-@app.route('/', methods=['GET'], strict_slashes=False)
-def index() -> str:
+@app.route('/')
+def get_index() -> str:
     """ GET /
-        Return: 0-index.html
+        Return: 3-index.html
     """
     return render_template('3-index.html')
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0", port="5000")
