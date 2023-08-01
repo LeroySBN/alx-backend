@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-""" Basic Flask app, Basic Babel setup, Get locale from request,
-    Parametrize templates, Force locale with URL parameter
+""" Basic Flask app
 """
 from flask import Flask, render_template
 
@@ -8,11 +7,11 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=['GET'], strict_slashes=False)
-def index():
+def index() -> str:
     """ GET /
         Return: 0-index.html
     """
     return render_template('0-index.html')
 
 
-app.run(host="localhost", port=5000)
+app.run()
