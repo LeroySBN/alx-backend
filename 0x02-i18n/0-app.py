@@ -7,11 +7,12 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=['GET'], strict_slashes=False)
-def index():
+def index() -> str:
     """ GET /
         Return: 0-index.html
     """
     return render_template('0-index.html')
 
 
-app.run()
+if __name__ == "__main__":
+    app.run()
