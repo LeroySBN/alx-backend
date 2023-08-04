@@ -19,17 +19,19 @@ class Config(object):
 
 
 app.config.from_object(Config)
-babel = Babel(app)
 
 
-@babel.locale
+# @babel.locale
 def get_locale() -> str:
     """ Determines the best match with our supported languages.
     """
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
-# babel.init_app(app, locale_selector=get_locale)
+babel = Babel(app)
+babel.init_app(app, locale_selector=get_locale)
+
+
 @app.route('/')
 def get_index() -> str:
     """ GET /
