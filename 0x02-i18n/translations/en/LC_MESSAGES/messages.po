@@ -10,4 +10,3 @@ msgstr "Welcome to Holberton"
 #: 3-app.py:36 4-app.py:38 templates/5-index.html:8
 msgid "home_header"
 msgstr "Hello world!"
-
