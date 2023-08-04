@@ -2,8 +2,8 @@
 """ Mock logging in a user, Use user locale to display welcome message.
 """
 from flask import Flask, render_template, request, g
-from flask_babel import Babel
-from flask_babel import gettext as _
+from flask_babel import Babel, _
+import pytz
 
 app = Flask(__name__)
 babel = Babel(app)
@@ -46,6 +46,25 @@ def get_locale() -> str:
         return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
+@babel.timezoneselector
+def get_timezone() -> str:
+    """ Determines the best match for the time zone """
+    user_timezone = None
+
+    if 'timezone' in request.args:
+        user_timezone = request.args['timezone']
+    if not user_timezone and g.user:
+        user_timezone = g.user.get('timezone')
+    if not user_timezone:
+        return 'UTC'
+
+    try:
+        pytz.timezone(user_timezone)
+        return user_timezone
+    except pytz.exceptions.UnknownTimeZoneError:
+        return 'UTC'
+
+
 def get_user(user_id: int):
     """ Returns the user dictionary or None if not found
     """
@@ -67,9 +86,9 @@ def before_request():
 def get_index() -> str:
     """ GET /
     Return:
-      - 6-index.html
+      - 7-index.html
     """
-    return render_template("6-index.html")
+    return render_template("7-index.html")
 
 
 if __name__ == "__main__":
