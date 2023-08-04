@@ -25,10 +25,6 @@ babel = Babel(app)
 def get_locale() -> str:
     """ Determines the best match with our supported languages.
     """
-    query_locale = request.args.get('locale')
-    if query_locale:
-        return query_locale
-
     if request.args.get('locale') in app.config['LANGUAGES']:
         return request.args.get('locale')
     return request.accept_languages.best_match(app.config['LANGUAGES'])
