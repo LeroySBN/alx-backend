@@ -22,7 +22,7 @@ babel = Babel(app)
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> str:
     """ Determines the best match with our supported languages.
     """
     return request.accept_languages.best_match(app.config['LANGUAGES'])
@@ -33,8 +33,8 @@ def get_index() -> str:
     """ GET /
         Return: 3-index.html
     """
-    return render_template('3-index.html')
+    return render_template('3-index.html', title=_('home_title'), header=_('home_header'))
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port="5000")
+    app.run(host="0.0.0.0", port=5000)

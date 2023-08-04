@@ -25,8 +25,8 @@ babel = Babel(app)
 def get_locale() -> str:
     """ Determines the best match with our supported languages.
     """
-    if request.args.get('locale') in app.config['LANGUAGES']:
-        return request.args.get('locale')
+    if 'locale' in request.args and request.args['locale'] in app.config['LANGUAGES']:
+        return request.args['locale']
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
@@ -35,7 +35,7 @@ def get_index() -> str:
     """ GET /
         Return: 4-index.html
     """
-    return render_template('4-index.html')
+    return render_template('4-index.html', title=_('home_title'), header=_('home_header'))
 
 
 if __name__ == "__main__":
