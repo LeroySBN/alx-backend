@@ -28,7 +28,7 @@ babel = Babel(app)
 app.config.from_object(Config)
 
 
-@babel.localeselector # Not needed if using flask_babel package
+@babel.localeselector
 def get_locale() -> str:
     """ Determines the best match with our supported languages.
     """
