@@ -3,7 +3,7 @@
     Parametrize templates, Force locale with URL parameter
 """
 from flask import Flask, render_template, request
-from flask_babel import Babel
+from flask_babel import Babel, _
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -39,4 +39,4 @@ def get_index() -> str:
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port="5000")
+    app.run(host="0.0.0.0", port=5000)
