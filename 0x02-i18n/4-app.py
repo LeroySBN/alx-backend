@@ -40,11 +40,8 @@ def get_index() -> str:
     """ GET /
         Return: 4-index.html
     """
-    return render_template(
-        '4-index.html',
-        title=_('home_title'),
-        header=_('home_header'))
+    return render_template('4-index.html')
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run()
