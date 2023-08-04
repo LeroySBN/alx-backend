@@ -21,7 +21,7 @@ class Config(object):
 app.config.from_object(Config)
 
 
-# @babel.locale
+@babel.locale
 def get_locale() -> str:
     """ Determines the best match with our supported languages.
     """
@@ -29,7 +29,7 @@ def get_locale() -> str:
 
 
 babel = Babel(app)
-babel.init_app(app, locale_selector=get_locale)
+# babel.init_app(app, locale_selector=get_locale)
 
 
 @app.route('/')
