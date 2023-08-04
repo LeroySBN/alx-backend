@@ -3,7 +3,8 @@
     Parametrize templates, Force locale with URL parameter
 """
 from flask import Flask, render_template, request
-from flask_babel import Babel, _
+from flask_babel import Babel
+from flask_babel import gettext as _
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -18,16 +19,19 @@ class Config(object):
 
 
 app.config.from_object(Config)
-babel = Babel(app)
 
 
-@babel.localeselector
+# @babel.localeselector
 def get_locale() -> str:
     """ Determines the best match with our supported languages.
     """
     if 'locale' in request.args and request.args['locale'] in app.config['LANGUAGES']:
         return request.args['locale']
     return request.accept_languages.best_match(app.config['LANGUAGES'])
+
+
+babel = Babel(app)
+babel.init_app(app, locale_selector=get_locale)
 
 
 @app.route('/')

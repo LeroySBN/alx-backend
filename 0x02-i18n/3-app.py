@@ -3,7 +3,8 @@
     Parametrize templates
 """
 from flask import Flask, render_template, request
-from flask_babel import Babel, _
+from flask_babel import Babel
+from flask_babel import gettext as _
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -18,15 +19,17 @@ class Config(object):
 
 
 app.config.from_object(Config)
-babel = Babel(app)
 
 
-@babel.localeselector
+# @babel.locale
 def get_locale() -> str:
     """ Determines the best match with our supported languages.
     """
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
+
+babel = Babel(app)
+babel.init_app(app, locale_selector=get_locale)
 
 @app.route('/')
 def get_index() -> str:
@@ -37,4 +40,4 @@ def get_index() -> str:
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run()
