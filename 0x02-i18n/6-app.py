@@ -6,6 +6,7 @@ from flask_babel import Babel
 from flask_babel import gettext as _
 
 app = Flask(__name__)
+babel = Babel(app)
 app.url_map.strict_slashes = False
 
 users = {
@@ -23,7 +24,7 @@ class Config(object):
     BABEL_DEFAULT_LOCALE = "en"
     BABEL_DEFAULT_TIMEZONE = "UTC"
 
-babel = Babel(app)
+
 app.config.from_object(Config)
 
 
@@ -41,9 +42,6 @@ def get_locale() -> str:
         if request.headers.get('locale') in app.config['LANGUAGES']:
             return request.headers.get('locale')
     return request.accept_languages.best_match(app.config['LANGUAGES'])
-
-
-# babel.init_app(app, locale_selector=get_locale)
 
 
 def get_user(user_id: int):

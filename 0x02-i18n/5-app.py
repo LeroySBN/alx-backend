@@ -28,7 +28,7 @@ babel = Babel(app)
 app.config.from_object(Config)
 
 
-@babel.localeselector
+@babel.localeselector # Not needed if using flask_babel package
 def get_locale() -> str:
     """ Determines the best match with our supported languages.
     """
@@ -36,9 +36,6 @@ def get_locale() -> str:
         if request.args['locale'] in app.config['LANGUAGES']:
             return request.args['locale']
     return request.accept_languages.best_match(app.config['LANGUAGES'])
-
-
-# babel.init_app(app, locale_selector=get_locale)
 
 
 def get_user(user_id: int):
