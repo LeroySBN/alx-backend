@@ -1,4 +1,4 @@
-// Node Redis Client
+// Node Redis client and advanced operations
 import { createClient } from 'redis';
 
 const client = createClient();
