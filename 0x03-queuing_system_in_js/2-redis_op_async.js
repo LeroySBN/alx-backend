@@ -1,5 +1,6 @@
 // Node Redis client and advanced operations
 import { createClient } from 'redis';
+const { promisify } = require('util');
 
 const client = createClient();
 
@@ -17,11 +18,16 @@ function setNewSchool(schoolName, value) {
   });
 }
 
+const asyncGet = promisify(client.get).bind(client);
+
 const displaySchoolValue = async (schoolName) => {
-  await client.get(schoolName, (err, reply) => {
+  try {
+    const reply = await asyncGet(schoolName);
     console.log(reply);
-  });
-}
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 
 displaySchoolValue('Holberton');
