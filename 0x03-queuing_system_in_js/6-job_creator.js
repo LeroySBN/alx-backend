@@ -3,7 +3,7 @@ const queue = require('kue').createQueue();
 
 const jobData = {
   phoneNumber: '1234567890',
-  message: 'Random message',
+  message: 'This is the code to verify your account',
 };
 
 const job = queue.create('push_notification_code', jobData).save((err) => {
