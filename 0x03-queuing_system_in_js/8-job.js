@@ -1,6 +1,4 @@
 // Writing the job creation function
-const queue = require('kue').createQueue();
-
 const createPushNotificationsJobs = (jobs, queue) => {
   if (!Array.isArray(jobs)) throw Error('Jobs is not an array');
   jobs.forEach((job) => {
